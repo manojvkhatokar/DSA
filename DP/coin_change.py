@@ -9,11 +9,10 @@ def coin_change(coins, amount):
     dp = [float('inf')] * (amount + 1)
     dp[0] = 0  # Base case: 0 coins are needed to make amount 0
 
-    # Iterate through each coin
-    for coin in coins:
-        # Update the dp array for all amounts that can be reached with the current coin
-        for x in range(coin, amount + 1):
-            dp[x] = min(dp[x], dp[x - coin] + 1)
-
-    # If dp[amount] is still infinity, it means it's not possible to form that amount
-    return dp[amount] if dp[amount] != float('inf') else -1
+    # Iterate through each amount from 1 to amount
+    for a in range(1, amount + 1):
+        for c in coins:
+            if a - c >= 0:
+                dp[a] = min(dp[a], 1 + dp[a - c])
+        
+    return dp[amount] if dp[amount]!= float('inf') else -1
